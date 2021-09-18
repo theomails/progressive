@@ -24,7 +24,7 @@ Some modern design ideas that have been used:
 
 Some interesting facts about the library:
 - The whole library is essentially a single core class
-- This page constitutes the entire documentation you need to read
+- This page probably constitutes the entire documentation you need to read!
 
 
 Scroll to the bottom to see a few `PComponent`s in action.
