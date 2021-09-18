@@ -2,12 +2,12 @@
 
 A _progressive component_ takes inputs from its parent in terms of `props`. It has `data`, which can be richer than the `props` passed in, which 
 represents its whole _state_. Whenever this data changes, the component should pass the updated data to the framework, which 
-uses some hooks on the component to decide whether to update this component itself and/or its children, and the call the render hooks. The 
+uses some hooks on the component to decide whether to update this component itself and/or its children and then calls the render hooks. The 
 component is given an event bus internally so that the parent can register a `listener` and listen to the 
 events `posted` by the component. 
 
 The component is given lifecycle hooks so that it can manage its own lifecycle. A _progressive component_ 
-can encapsulate one _Swing_ `JComponent`. To support the rendering, the component defines its own render function which will update its _Swing_ `JComponent`. In addition to this, the component 
+can encapsulate one Swing `JComponent`. To support the rendering, the component defines its own render function which will update its `JComponent`. In addition to this, the component 
 describes a list of child `PComponents`, if any, which should be rendered.  Each component is defined by sub-classing the base component `PComponent`. 
 
 Some design ideas that have been used:
@@ -21,11 +21,11 @@ Scroll to the bottom to see a couple of `PComponent`s in action.
 
  `PComponent` is the Progressive Swing framework core class, which defines a Reactive Visual Component.
  
-Any Progressive component is created as a sub-class of `PComponent` class, with two template type specifications. A `PComponent` is defined around a single _Swing_ `JComponent`
+Any Progressive component is created as a sub-class of `PComponent` class, with two template type specifications. A `PComponent` is defined around a single Swing `JComponent`
  which it manages (however that component could be a container, and more nested `JComponent`s could be handled by the `PComponent` itself). Each `PComponent` could have 
  several `PComponents` as children. The framework takes care of rendering the children which are `PComponent`s.
  
-The `PComponent` is reactive in the sense that the when-to-redraw decision is taken automatically by the framework, whenever data is updated.
+The `PComponent` is reactive in the sense that the _when-to-redraw_ decision is taken automatically by the framework, whenever data is updated.
  Also, rendering of own Swing component(s) and rendering of child `PComponent`s are triggered by the framework.
  
 `PComponent` provides several lifecycle hooks to enable the component to be well defined. Using these, the `PComponent` can manage the Swing component(s) that it wraps.
