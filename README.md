@@ -343,7 +343,7 @@ public class VFScanSettingsPanel extends PComponent<String, String>{
 
 ```java
 
-	//Marker interface. Guava Event Bus calls the appropriate handler based on the Event data type.
+	//Marker interface. The library (with the help of Guava Event Bus) calls the appropriate handler based on the Event data type.
 	public static interface PEventListener{}
 	
 	@Data
