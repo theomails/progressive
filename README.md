@@ -158,3 +158,183 @@ public class PLabel extends PComponent<String, String>{
 
 ```
 
+#### PSimpleTextField - An example of a component that is bundled with the library that reacts to Swing events
+
+```
+
+public class PSimpleTextField extends PComponent<String, String>{
+	@Data
+	public static class PSTFActionEvent{
+		private final ActionEvent event;
+	}
+	@Data
+	public static class PSTFValueEvent{
+		private final String value;
+	}
+	
+	private JTextField textField = new JTextField();
+	public PSimpleTextField(PPlacers placers) {
+		super(placers);
+	}
+
+	@Override
+	protected PDataPeekers<String> getDataPeekers() {
+		return new PAllToSelfDataPeekers<String>();
+	}
+
+	@Override
+	protected PRenderers<String> getRenderers() {
+		return new PRenderers<String>( ()-> textField, (data)->{
+			if(!textField.getText().equals(data)) {
+				textField.setText(data);
+			}
+		}, (data)-> new PChildrenPlan());
+
+	}
+
+	@Override
+	protected PLifecycleHandler getLifecycleHandler() {
+		return new PSimpleLifecycleHandler() {
+			@Override
+			public void prePlacement() {
+				textField.addActionListener((e)->{
+					post(new PSTFActionEvent(e));
+				});
+				
+				//Below gets fired even when we programmatically do setText on the UI field.
+				textField.getDocument().addDocumentListener(new DocumentListener() {
+					public void changedUpdate(DocumentEvent e) {
+						postChange();
+					}
+					public void removeUpdate(DocumentEvent e) {
+						postChange();
+					}
+					public void insertUpdate(DocumentEvent e) {
+						postChange();
+					}
+					
+					private void postChange() {
+						//Needed because getText doesn't stabilise until all the remove/insert events have fired.
+						SwingUtilities.invokeLater(()->{
+							String text = textField.getText();
+							post(new PSTFValueEvent(text));
+						});
+					}
+				});
+			}
+			@Override
+			public void postProps() {
+				setData(getProps());
+			}
+		};
+	}
+
+}
+
+```
+
+#### VFStatusPanel - An example of a more meaty component that an end user of the library would create.
+
+```
+
+public class VFScanSettingsPanel extends PComponent<String, String>{
+	//EVENTS
+	@Data
+	public static class VFSSPPathChangedEvent{
+		private final String path;
+	}
+	@Data
+	public static class VFSSPScanClickedEvent{
+	}
+	
+	
+	private PDisplayWindow window;
+	private JPanel panel = new JPanel(new MigLayout("insets 1","[]5[grow, fill]10[]5[]","[]"));
+	private PPlacers simplePlacers = new PSimpleContainerPlacers(panel);
+
+	private PLabel lblPath = new PLabel( simplePlacers );
+	private PSimpleTextField txtPath = new PSimpleTextField( simplePlacers );
+	private PSimpleButton btnBrowse = new PSimpleButton( simplePlacers );
+	private PSimpleButton btnScan = new PSimpleButton( simplePlacers );
+
+	public VFScanSettingsPanel(PPlacers placers, PDisplayWindow window) {
+		super(placers);
+		this.window = window;
+	}
+
+	@Override
+	protected PDataPeekers<String> getDataPeekers() {
+		return new PAllToChildrenDataPeekers<String>();
+	}
+
+	@Override
+	protected PRenderers<String> getRenderers() {
+		return new PRenderers<String>( ()-> panel, (data)->{}, (data)->{
+			PChildrenPlan plans = new PChildrenPlan();
+			
+			PChildPlan plan = PChildPlan.builder().component(lblPath).props("Folder to Scan: ").listener(Optional.empty()).build();
+			plans.addChildPlan(plan);
+			
+			plan = PChildPlan.builder().component(txtPath).props(data).listener( Optional.of( new PEventListener() {
+				@Subscribe
+				public void handle(PSTFValueEvent e) {
+					post(new VFSSPPathChangedEvent(e.getValue()));
+				}
+			} )).build();
+			plans.addChildPlan(plan);
+			
+			plan = PChildPlan.builder().component(btnBrowse).props("Browse...").listener(Optional.of( new PEventListener() {
+				@Subscribe
+				public void handle(PSBActionEvent e) {
+					onBrowseClick();
+				}
+			} )).build();
+			plans.addChildPlan(plan);
+			
+			plan = PChildPlan.builder().component(btnScan).props("Scan").listener(Optional.of( new PEventListener() {
+				@Subscribe
+				public void handle(PSBActionEvent e) {
+					onScanClick();
+				}
+			} )).build();
+			plans.addChildPlan(plan);
+			
+			return plans;
+		} );
+	}
+	
+	public void onBrowseClick() {
+		JFileChooser chooser = new JFileChooser();
+		System.out.println("Trying to open folder.." + getData());
+		chooser.setCurrentDirectory(new File( getData() ));
+		chooser.setDialogTitle("Choose Folder to Scan...");
+		chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+		// disable the "All files" option.
+		chooser.setAcceptAllFileFilterUsed(false);
+		if (chooser.showOpenDialog(window) == JFileChooser.APPROVE_OPTION) {
+			File result = chooser.getSelectedFile();
+			if(!result.isDirectory()) {
+				result = chooser.getCurrentDirectory();
+			}
+			String sPath = result.toPath().toString();
+			System.out.println("SEND: " + sPath);
+			post(new VFSSPPathChangedEvent(sPath));
+		}
+	}
+	public void onScanClick() {
+		post(new VFSSPScanClickedEvent());
+	}
+
+	@Override
+	protected PLifecycleHandler getLifecycleHandler() {
+		return new PSimpleLifecycleHandler() {
+			@Override
+			public void postProps() {
+				setData( getProps() );
+			}
+		};
+	}
+
+}
+
+```
