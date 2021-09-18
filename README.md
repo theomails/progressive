@@ -1,4 +1,4 @@
-# Progressive Swing - Simple reactive component model for Swing inspired by Vue JS
+# Progressive Swing - A simple reactive component model for Swing inspired by Vue JS
 
 A _progressive component_ takes inputs from its parent in terms of `props`. It has `data`, which can be richer than the `props` passed in, which 
 represents its whole _state_. Whenever this data changes, the component should pass the updated data to the framework, which 
