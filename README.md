@@ -22,6 +22,11 @@ Some modern design ideas that have been used:
 - Immutable data structures are used for the `props` and `data` so that the old state can be retained and compared efficiently with the new state.
 - A light weight event bus is used, with custom data types for the events, and events being routed to the appropriate handler based on the handler method signature.
 
+Some interesting facts about the library:
+- The whole library is essentially a single core class
+- This page constitutes the entire documentation you need to read
+
+
 Scroll to the bottom to see a few `PComponent`s in action.
 
 ## PComponent class
