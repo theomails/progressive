@@ -2,8 +2,9 @@
 
 A _progressive component_ takes inputs from its parent in terms of `props`. It has `data`, which can be richer than the `props` passed in, which 
 represents its whole _state_. Whenever this data changes, the component should pass the updated data to the framework, which 
-uses some hooks on the component to decide whether to update this component itself and/or its children and then calls the render hooks. The 
-component is given an event bus internally so that the parent can register a `listener` and listen to the 
+uses some hooks on the component to decide whether to update this component itself and/or its children and then calls the render hooks. 
+
+The component is given an event bus internally so that the parent can register a `listener` and listen to the 
 events `posted` by the component. 
 
 The component is given lifecycle hooks so that it can manage its own lifecycle. A _progressive component_ 
@@ -13,9 +14,9 @@ describes a list of child `PComponents`, if any, which should be rendered.  Each
 Some design ideas that have been used:
 - Lambdas as used to define the hook functions wherever possible so that the component definition is concise
 - Immutable data structures are used for the `props` and `data` so that the old state can be retained and compared efficiently with the new state.
-- Light weight event bus is used, with custom data types for the events, and events being routed to the appropriate handler based on the handler method signature.
+- A light weight event bus is used, with custom data types for the events, and events being routed to the appropriate handler based on the handler method signature.
 
-Scroll to the bottom to see a couple of `PComponent`s in action.
+Scroll to the bottom to see a few `PComponent`s in action.
 
 ## PComponent
 
@@ -309,7 +310,6 @@ public class VFScanSettingsPanel extends PComponent<String, String>{
 		chooser.setCurrentDirectory(new File( getData() ));
 		chooser.setDialogTitle("Choose Folder to Scan...");
 		chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-		// disable the "All files" option.
 		chooser.setAcceptAllFileFilterUsed(false);
 		if (chooser.showOpenDialog(window) == JFileChooser.APPROVE_OPTION) {
 			File result = chooser.getSelectedFile();
