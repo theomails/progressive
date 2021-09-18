@@ -338,3 +338,65 @@ public class VFScanSettingsPanel extends PComponent<String, String>{
 }
 
 ```
+
+### Key Classes which are used to define the hooks for the component
+
+```java
+
+	//Marker interface. Guava Event Bus calls the appropriate handler based on the Event data type.
+	public static interface PEventListener{}
+	
+	@Data
+	public static class PPlacers{
+		private final Consumer<JComponent> placer;
+		private final Consumer<JComponent> remover;		
+	}
+	
+	@Data
+	public static class PDataPeekers <T>{
+		private final Function<T, Set<Object>> selfDataGetter;
+		private final Function<T, Set<Object>> childrenDataGetter;
+	}
+	
+	@Data
+	public static class PRenderers <T>{
+		private final Supplier<JComponent> uiComponentMaker;
+		private final Consumer<T> selfRenderer;
+		private final Function<T, PChildrenPlan> childrenPlanRenderer;
+	}
+	
+	public static interface PLifecycleHandler {
+		public void prePlacement();
+		/**
+		 * Will be called after placed, and props assigned.
+		 */
+		public void postPlacement();
+		public void preProps();
+		public void postProps();
+		public void preRemove();
+		public void postRemove();
+	}
+	
+	//Simple implementation which provides blank implementations for all the lifecycle methods
+	public static class PSimpleLifecycleHandler implements PLifecycleHandler{
+		@Override
+		public void prePlacement() {
+		}
+		@Override
+		public void postPlacement() {
+		}
+		@Override
+		public void preProps() {
+		}
+		@Override
+		public void postProps() {
+		}
+		@Override
+		public void preRemove() {
+		}
+		@Override
+		public void postRemove() {
+		}
+	}
+
+```
