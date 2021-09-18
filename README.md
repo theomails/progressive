@@ -1,7 +1,8 @@
 # Progressive Swing - A simple reactive component model for Swing inspired by Vue JS
 
-The Progressive reactive component model enables users to encapsulate UI components well - so that the entire app can be defined as a deeply nested tree of components. 
-Build nifty custom components or quickly wrap Swing components in PComponents and make the most out of the powerful Swing components like tables and trees.
+The Progressive component model enables users to encapsulate UI components well - so that a complete desktop form or page can be defined as one deeply nested tree of components. 
+
+Build nifty custom components or quickly wrap Swing components in `PComponent`s and make the most out of the powerful Swing library.
 
 ## Progressive Component
 
