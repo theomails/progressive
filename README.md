@@ -17,8 +17,8 @@ The component is given lifecycle hooks so that it can manage its own lifecycle. 
 can encapsulate one Swing `JComponent`. To support the rendering, the component defines its own render function which will update its `JComponent`. In addition to this, the component 
 describes a list of child `PComponents`, if any, which should be rendered.  Each component is defined by sub-classing the base component `PComponent`. 
 
-Some design ideas that have been used:
-- Lambdas as used to define the hook functions wherever possible so that the component definition is concise
+Some modern design ideas that have been used:
+- Lambdas as used to define the hook functions wherever possible so that the user code can be concise
 - Immutable data structures are used for the `props` and `data` so that the old state can be retained and compared efficiently with the new state.
 - A light weight event bus is used, with custom data types for the events, and events being routed to the appropriate handler based on the handler method signature.
 
