@@ -1,4 +1,4 @@
-# Progressive Swing - A dead-simple reactive component model for Swing inspired by Vue JS
+# Progressive Swing - A dead-simple reactive component model inspired by Vue JS
 
 The Progressive component model enables users to encapsulate UI components well - so that a complete desktop form or page can be defined as one deeply nested tree of components. 
 
