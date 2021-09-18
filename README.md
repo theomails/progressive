@@ -7,7 +7,7 @@ Build nifty custom components or quickly wrap Swing components in `PComponent`s 
 ## Progressive Component
 
 A _progressive component_ takes inputs from its parent in terms of `props`. It has `data`, which can be richer than the `props` passed in, which 
-represents its whole _state_. Whenever this data changes, the component should pass the updated data to the framework, which 
+represents its whole _state_. Whenever this data changes, the component may pass the updated data to the framework, which 
 uses some hooks on the component to decide whether to update this component itself and/or its children and then calls the render hooks. 
 
 The component is given an event bus internally so that the parent can register a `listener` and listen to the 
