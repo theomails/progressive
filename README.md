@@ -367,9 +367,6 @@ public class VFScanSettingsPanel extends PComponent<String, String>{
 	
 	public static interface PLifecycleHandler {
 		public void prePlacement();
-		/**
-		 * Will be called after placed, and props assigned.
-		 */
 		public void postPlacement();
 		public void preProps();
 		public void postProps();
