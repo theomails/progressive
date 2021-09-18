@@ -69,7 +69,7 @@ Some tips for defining the generic types for `PComponent`s:
 
 #### Eg. 1 - VFStatusPanel - An example of a component that an end user of the library would create.
 
-```
+```java
 
 public class VFStatusPanel extends PComponent<VFStatusData, VFStatusData>{
 	@Data
@@ -119,7 +119,7 @@ public class VFStatusPanel extends PComponent<VFStatusData, VFStatusData>{
 
 #### Eg. 2 - PLabel - An example of a simple component that is bundled with the library.
 
-```
+```java
 
 public class PLabel extends PComponent<String, String>{
 	@Data
@@ -160,7 +160,7 @@ public class PLabel extends PComponent<String, String>{
 
 #### Eg. 3 - PSimpleTextField - An example of a component that is bundled with the library that reacts to Swing events
 
-```
+```java
 
 public class PSimpleTextField extends PComponent<String, String>{
 	@Data
@@ -235,7 +235,7 @@ public class PSimpleTextField extends PComponent<String, String>{
 
 #### Eg. 4 - VFStatusPanel - An example of a more meaty component that an end user of the library would create.
 
-```
+```java
 
 public class VFScanSettingsPanel extends PComponent<String, String>{
 	//EVENTS
