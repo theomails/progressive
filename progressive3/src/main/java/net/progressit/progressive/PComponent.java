@@ -3,10 +3,12 @@ package net.progressit.progressive;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.logging.Logger;
 
 import javax.swing.JComponent;
 import javax.swing.SwingUtilities;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.google.common.eventbus.EventBus;
 
@@ -30,7 +32,7 @@ import lombok.Getter;
  * @param <T>
  */
 public abstract class PComponent<T,U> {
-	private static final Logger LOGGER = Logger.getLogger( PComponent.class.getName() );
+	private static final Logger LOGGER = LoggerFactory.getLogger( PComponent.class.getName() );
 	
 	/**
 	 * The static <code>place</code> method which allows "outside" to place the <em>root</em> PComponent.
@@ -185,6 +187,7 @@ public abstract class PComponent<T,U> {
 	}
 	
 	public void setProps(U props) {
+		LOGGER.info(string("Setting props"));
 		//LOGGER.info(string("Settings props", props));
 		ensureEDT();
 		
@@ -193,13 +196,13 @@ public abstract class PComponent<T,U> {
 		this.getLifecycleHandler().postProps();
 	}
 	protected U getProps() {
-		//LOGGER.info(string("Getting props"));
+		LOGGER.info(string("Getting props"));
 		ensureEDT();
 		
 		return props;
 	}
 	public T getData() {
-		//LOGGER.info(string("Getting data"));
+		LOGGER.info(string("Getting data"));
 		ensureEDT();
 		
 		return renderedData;
@@ -209,11 +212,12 @@ public abstract class PComponent<T,U> {
 	 * @param inData
 	 */
 	protected void setData(T inData) {
+		LOGGER.info(string("Setting data"));
 		//LOGGER.info(string("Setting data", inData));
 		ensureEDT();
 		
 		if((inData==null && renderedData==null) || inData.equals(renderedData)) {
-			LOGGER.info(string("No change in data"));
+			LOGGER.debug(string("No change in data"));
 			return;
 		}
 		//Some change is there
@@ -221,15 +225,15 @@ public abstract class PComponent<T,U> {
 		Set<Object> childrenData = partitionDataForChildren(inData);
 		
 		if(!selfData.equals(renderedSelfData)) {
-			LOGGER.info(string("Self data has changed.. rendering"));
-			LOGGER.info("selfData " + selfData);
-			LOGGER.info("renderedSelfData " + renderedSelfData);
+			LOGGER.debug(string("Self data has changed.. rendering"));
+			LOGGER.debug("selfData " + selfData);
+			LOGGER.debug("renderedSelfData " + renderedSelfData);
 			renderSelf(inData);
 			renderedSelfData = selfData;
 		}
 		renderedData = inData; //Set before going to children.
 		if(!childrenData.equals(renderedChildrenData)) {
-			LOGGER.info(string("Children data has changed.. rendering"));
+			LOGGER.debug(string("Children data has changed.. rendering"));
 			PChildrenPlan childrenPlan = renderChildrenPlan(inData);
 			renderedChildrenData = childrenData; //Data has been processed into plan
 			diffAndRenderPlan(childrenPlan);
@@ -267,7 +271,7 @@ public abstract class PComponent<T,U> {
 	}
 	
 	protected void post(Object event) {
-		//LOGGER.info(string("Posting event to bus", event));
+		LOGGER.info(string("Posting event to bus", event));
 		ensureEDT();
 		if(!declareEmittedEvents().contains(event.getClass())) {
 			throw new RuntimeException("Undeclared event class: " + event.getClass());
@@ -295,9 +299,9 @@ public abstract class PComponent<T,U> {
 			}
 		}
 		if(matchedCount>0) {
-			LOGGER.info(string("First #n components matched: ", matchedCount, " Re-using components"));
+			LOGGER.debug(string("First #n components matched: ", matchedCount, " Re-using components"));
 			for(int i=0;i<matchedCount;i++) {
-				LOGGER.info(string("#i", (i + 1)));
+				LOGGER.debug(string("#i", (i + 1)));
 				//Swap out info, so that same component is re-used, possibly for different data/listener
 				PChildPlan newPlan = childrenPlan.getChildrenPlan().get(i);
 				PComponent<Object, Object> renderedComponent = renderedChildComponents.get(i);
@@ -308,10 +312,10 @@ public abstract class PComponent<T,U> {
 		} 
 		if(oldSize!=newSize) {
 			if(oldSize > matchedCount) {
-				LOGGER.info(string("Removing #n excess components", (oldSize - matchedCount)));
+				LOGGER.debug(string("Removing #n excess components", (oldSize - matchedCount)));
 				//Remove old comps
 				for(int i=matchedCount;i<oldSize;i++) {
-					LOGGER.info(string("#i", (i - matchedCount + 1)));
+					LOGGER.debug(string("#i", (i - matchedCount + 1)));
 					PComponent oldComponent = renderedChildComponents.get(renderedChildComponents.size()-1); //Get next available
 					JComponent uiComponent = (JComponent) oldComponent.getUiComponent();
 					oldComponent.getLifecycleHandler().preRemove();
@@ -322,10 +326,10 @@ public abstract class PComponent<T,U> {
 				}
 			}
 			if(newSize>matchedCount) {
-				LOGGER.info(string("Adding #n new components", (newSize - matchedCount)));
+				LOGGER.debug(string("Adding #n new components", (newSize - matchedCount)));
 				//Add new comps
 				for(int i=matchedCount;i<newSize;i++) {
-					LOGGER.info(string("#i", (i - matchedCount + 1)));
+					LOGGER.debug(string("#i", (i - matchedCount + 1)));
 					PChildPlan newPlan = childrenPlan.getChildrenPlan().get(i);
 					PComponent newComponent = newPlan.getComponent(); //Get next available
 					JComponent uiComponent = (JComponent) newComponent.getUiComponent();
