@@ -187,7 +187,7 @@ public abstract class PComponent<T,U> {
 	}
 	
 	public void setProps(U props) {
-		LOGGER.info(string("Setting props"));
+		LOGGER.info(string("Setting props :: ", props));
 		//LOGGER.info(string("Settings props", props));
 		ensureEDT();
 		
@@ -212,7 +212,7 @@ public abstract class PComponent<T,U> {
 	 * @param inData
 	 */
 	protected void setData(T inData) {
-		LOGGER.info(string("Setting data"));
+		LOGGER.info(string("Setting data :: ", inData));
 		//LOGGER.info(string("Setting data", inData));
 		ensureEDT();
 		
