@@ -11,6 +11,7 @@ import net.progressit.progressive.PPlacers;
  * @author theo
  *
  */
+@Deprecated
 public class PSimpleContainerPlacers extends PPlacers {
 
 	public PSimpleContainerPlacers(Container container) {

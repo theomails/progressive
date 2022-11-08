@@ -6,6 +6,7 @@ import java.util.Set;
 import javax.swing.JComponent;
 
 import net.progressit.progressive.PChildrenPlan;
+import net.progressit.progressive.PPlacers;
 
 public class PComponentHelper {
 	public static Set<Object> setWithNoData(){
@@ -22,5 +23,15 @@ public class PComponentHelper {
 	}
 	public static PChildrenPlan emptyChildrenPlan() {
 		return new PChildrenPlan();
+	}
+	public static PPlacers newSimpleContainerPlacer(Container container) {
+		return new PPlacers((c)->{container.add(c);}, (c)->{container.remove(c);});
+	}
+	public static PPlacers newSimpleContainerPlacer(Container container, boolean addWrap) {
+		if(addWrap) {
+			return new PPlacers((c)->{container.add(c, "wrap");}, (c)->{container.remove(c);});
+		}else {
+			return newSimpleContainerPlacer(container);
+		}
 	}
 }
