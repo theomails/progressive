@@ -1,13 +1,13 @@
 package net.progressit.progressive;
 
-import java.util.Set;
+import com.google.common.collect.Sets;
 
 import net.progressit.progressive.PComponent.PDataPeekers;
 
 public class PAllToSelfDataPeekers<T> extends PDataPeekers<T>{
 
 	public PAllToSelfDataPeekers() {
-		super((data)->Set.of(data), (data)->Set.of());
+		super((data)->Sets.newHashSet(data), (data)->Sets.newHashSet());
 	}
 
 }
