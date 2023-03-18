@@ -1,6 +1,7 @@
 package net.progressit.progressive.components;
 
 
+import java.util.Arrays;
 import java.util.List;
 
 import com.google.common.eventbus.EventBus;
@@ -16,7 +17,7 @@ import net.progressit.progressive.helpers.PSimpleLifecycleHandler;
 
 public class PSimpleButton extends PLeafComponent<String, String>{
 	@Data
-	public static class PSBButtonEvent{
+	public static class ButtonEvent{
 		private final ActionEvent event;
 	}
 	
@@ -31,7 +32,7 @@ public class PSimpleButton extends PLeafComponent<String, String>{
 			@Override
 			public void prePlacement() {
 				button.setOnAction((e)->{
-					post(new PSBButtonEvent(e));
+					post(new ButtonEvent(e));
 				});
 			}
 			@Override
@@ -53,7 +54,7 @@ public class PSimpleButton extends PLeafComponent<String, String>{
 
 	@Override
 	protected List<Class<?>> declareEmittedEvents() {
-		return List.of(PSBButtonEvent.class);
+		return Arrays.asList(ButtonEvent.class);
 	}
 
 }

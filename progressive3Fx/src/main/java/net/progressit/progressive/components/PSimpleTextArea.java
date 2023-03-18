@@ -1,5 +1,6 @@
 package net.progressit.progressive.components;
 
+import java.util.Arrays;
 import java.util.List;
 
 import com.google.common.eventbus.EventBus;
@@ -16,7 +17,7 @@ import net.progressit.progressive.helpers.PSimpleLifecycleHandler;
 public class PSimpleTextArea extends PLeafComponent<String, String>{
 
 	@Data
-	public static class PSTFValueEvent{
+	public static class ValueEvent{
 		private final String value;
 	}
 	
@@ -35,7 +36,7 @@ public class PSimpleTextArea extends PLeafComponent<String, String>{
 				//Below gets fired even when we programmatically do setText on the UI field?
 				textArea.textProperty().addListener( (observable, oldValue, newValue)->{
 					//TODO: Does it stabilise and all the remove/insert events have fired?
-					post(new PSTFValueEvent(newValue));
+					post(new ValueEvent(newValue));
 				});
 			}
 			@Override
@@ -59,7 +60,7 @@ public class PSimpleTextArea extends PLeafComponent<String, String>{
 
 	@Override
 	protected List<Class<?>> declareEmittedEvents() {
-		return List.of(PSTFValueEvent.class);
+		return Arrays.asList(ValueEvent.class);
 	}
 
 }

@@ -1,5 +1,6 @@
 package net.progressit.progressive.components;
 
+import java.util.Arrays;
 import java.util.List;
 
 import com.google.common.eventbus.EventBus;
@@ -15,11 +16,11 @@ import net.progressit.progressive.helpers.PSimpleLifecycleHandler;
 
 public class PSimpleTextField extends PLeafComponent<String, String>{
 	@Data
-	public static class PSTFActionEvent{
+	public static class TFActionEvent{
 		private final ActionEvent event;
 	}
 	@Data
-	public static class PSTFValueEvent{
+	public static class TFValueEvent{
 		private final String value;
 	}
 	
@@ -29,13 +30,13 @@ public class PSimpleTextField extends PLeafComponent<String, String>{
 		@Override
 		public void prePlacement() {
 			textField.setOnAction((e)->{
-				post(new PSTFActionEvent(e));
+				post(new TFActionEvent(e));
 			});
 			
 			//Below gets fired even when we programmatically do setText on the UI field?
 			textField.textProperty().addListener( (observable, oldValue, newValue)->{
 				//TODO: Does it stabilise and all the remove/insert events have fired?
-				post(new PSTFValueEvent(newValue));
+				post(new TFValueEvent(newValue));
 			});
 		}
 		@Override
@@ -67,7 +68,7 @@ public class PSimpleTextField extends PLeafComponent<String, String>{
 
 	@Override
 	protected List<Class<?>> declareEmittedEvents() {
-		return List.of(PSTFActionEvent.class, PSTFValueEvent.class);
+		return Arrays.asList(TFActionEvent.class, TFValueEvent.class);
 	}
 
 }
