@@ -1,5 +1,6 @@
 package net.progressit.progressive.components;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.JComponent;
@@ -78,7 +79,7 @@ public class PSimpleTextArea extends PLeafComponent<String, String>{
 
 	@Override
 	protected List<Class<?>> declareEmittedEvents() {
-		return List.of(ValueEvent.class);
+		return Arrays.asList(ValueEvent.class);
 	}
 
 }

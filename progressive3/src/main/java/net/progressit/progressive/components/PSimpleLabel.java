@@ -1,5 +1,6 @@
 package net.progressit.progressive.components;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.JComponent;
@@ -41,7 +42,7 @@ public class PSimpleLabel extends PLeafComponent<String, String>{
 
 	@Override
 	protected List<Class<?>> declareEmittedEvents() {
-		return List.of();
+		return Arrays.asList();
 	}
 
 }

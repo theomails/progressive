@@ -5,15 +5,17 @@ import java.util.Set;
 
 import javax.swing.JComponent;
 
+import com.google.common.collect.Sets;
+
 import net.progressit.progressive.PChildrenPlan;
 import net.progressit.progressive.PPlacers;
 
 public class PComponentHelper {
 	public static Set<Object> setWithNoData(){
-		return Set.of();
+		return Sets.newHashSet();
 	}
 	public static Set<Object> setWithAllData(Object data){
-		return Set.of(data);
+		return Sets.newHashSet(data);
 	}
 	public static void addToContainer(JComponent component, Container container) {
 		container.add(component);

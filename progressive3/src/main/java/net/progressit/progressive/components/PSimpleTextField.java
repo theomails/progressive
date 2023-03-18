@@ -1,6 +1,7 @@
 package net.progressit.progressive.components;
 
 import java.awt.event.ActionEvent;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.JComponent;
@@ -86,7 +87,7 @@ public class PSimpleTextField extends PLeafComponent<String, String>{
 
 	@Override
 	protected List<Class<?>> declareEmittedEvents() {
-		return List.of(TFActionEvent.class, TFValueEvent.class);
+		return Arrays.asList(TFActionEvent.class, TFValueEvent.class);
 	}
 
 }

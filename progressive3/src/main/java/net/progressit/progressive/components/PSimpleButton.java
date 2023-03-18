@@ -1,6 +1,7 @@
 package net.progressit.progressive.components;
 
 import java.awt.event.ActionEvent;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -53,7 +54,7 @@ public class PSimpleButton extends PLeafComponent<String, String>{
 
 	@Override
 	protected List<Class<?>> declareEmittedEvents() {
-		return List.of(ButtonEvent.class);
+		return Arrays.asList(ButtonEvent.class);
 	}
 
 }
