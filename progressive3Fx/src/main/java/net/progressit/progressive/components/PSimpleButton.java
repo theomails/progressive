@@ -18,6 +18,7 @@ import net.progressit.progressive.helpers.PSimpleLifecycleHandler;
 public class PSimpleButton extends PLeafComponent<String, String>{
 	@Data
 	public static class ButtonEvent{
+		private final PSimpleButton source;
 		private final ActionEvent event;
 	}
 	
@@ -32,7 +33,7 @@ public class PSimpleButton extends PLeafComponent<String, String>{
 			@Override
 			public void prePlacement() {
 				button.setOnAction((e)->{
-					post(new ButtonEvent(e));
+					post(new ButtonEvent(PSimpleButton.this, e));
 				});
 			}
 			@Override

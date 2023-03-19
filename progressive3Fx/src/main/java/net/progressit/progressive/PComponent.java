@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 
 import com.google.common.eventbus.EventBus;
 
+import javafx.application.Platform;
 import javafx.scene.Node;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -356,7 +357,7 @@ public abstract class PComponent<T,U> {
 	}
 	
 	private static void ensureEDT() {
-		if(!SwingUtilities.isEventDispatchThread()) {
+		if(!Platform.isFxApplicationThread() && !SwingUtilities.isEventDispatchThread()) {
 			throw new RuntimeException("All PComponent operations should be on EDT!");
 		}
 	}

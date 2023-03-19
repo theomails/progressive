@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>net.progressit</groupId>
 	<artifactId>progressive3Fx</artifactId>
-	<version>0.0.4-SNAPSHOT</version>
+	<version>0.0.5-SNAPSHOT</version>
 	<name>Progressive V3 FX</name>
 
 
@@ -21,6 +21,13 @@
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<version>1.18.4</version>
+			<scope>provided</scope>
+		</dependency>
+				<!-- https://mvnrepository.com/artifact/com.miglayout/miglayout-javafx -->
+		<dependency>
+			<groupId>com.miglayout</groupId>
+			<artifactId>miglayout-javafx</artifactId>
+			<version>11.0</version>
 			<scope>provided</scope>
 		</dependency>
 

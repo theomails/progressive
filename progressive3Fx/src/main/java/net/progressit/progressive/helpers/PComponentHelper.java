@@ -2,6 +2,8 @@ package net.progressit.progressive.helpers;
 
 import java.util.Set;
 
+import org.tbee.javafx.scene.layout.MigPane;
+
 import com.google.common.collect.Sets;
 
 import javafx.scene.Node;
@@ -27,5 +29,12 @@ public class PComponentHelper {
 	}
 	public static PPlacers newSimpleContainerPlacer(Pane container) {
 		return new PPlacers((c)->{container.getChildren().add(c);}, (c)->{container.getChildren().add(c);});
+	}
+	public static PPlacers newSimpleContainerPlacer(MigPane container, boolean addWrap) {
+		if(addWrap) {
+			return new PPlacers((c)->{container.add(c, "wrap");}, (c)->{container.remove(c);});
+		}else {
+			return newSimpleContainerPlacer(container);
+		}
 	}
 }
